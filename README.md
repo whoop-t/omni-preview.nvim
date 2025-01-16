@@ -8,3 +8,6 @@ Supported Previews:
 - [ ] Running npm servers
 - [ ] Latex
 - [ ] PDFs
+
+
+One day I would love to make this plugin behave like Mason.nvim and have a nice list of sources that can be used to install different preview plugins, but that is long in the future and will require a large amount of understanding.  
