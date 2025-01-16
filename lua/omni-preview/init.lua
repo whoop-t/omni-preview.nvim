@@ -1,64 +1,50 @@
 local M = {}
+M.running = false
 
 function M.preview()
-    for _, extra in ipairs(M.extras or {}) do
-        if extra.trigger() then
-            extra.preview()
-            return
-        end
-    end
-
     local ft = vim.bo.filetype
-    local preview = M.previews[ft]
-    if preview then
-        if type(preview.command) == "string" then
-            vim.cmd(preview.command)
-        elseif type(preview.command) == "function" then
-            preview.command()
-        else
-            vim.notify(
-                "Invalid preview command for filetype: " .. ft,
-                vim.log.levels.ERROR
-            )
+    local fe = vim.fn.expand("%:e")
+    local trig = false
+    for _, p in ipairs(M.previews or {}) do
+        if type(p.trig) == "string" then
+            if p.trig == ft or p.trig == fe then
+                trig = true
+            end
+        elseif type(p.trig == "function") then
+            if p.trig() then
+                trig = true
+            end
         end
-    else
-        vim.notify(
-            "No preview available for filetype: " .. ft,
-            vim.log.levels.WARN
-        )
-    end
-end
 
-M.default_system_open = function()
-    local filename = vim.fn.expand("%:p")
-    local success = os.execute("open " .. filename)
-    if not success then
-        print("Command failed!")
+        if trig then
+            if type(p.cmd) == "string" then
+                vim.cmd(p.cmd)
+                return
+            elseif type(p.cmd) == "function" then
+                p.cmd()
+                return
+            else
+                vim.notify(
+                    "Invalid preview command for filetype: " .. ft,
+                    vim.log.levels.ERROR
+                )
+                return
+            end
+        end
     end
+
+    vim.notify(
+        "No preview available for filetype: " .. ft,
+        vim.log.levels.WARN
+    )
 end
 
 function M.setup(opts)
     opts = opts or {}
     local keybind = opts.keybind or "<leader>p"
     local silent = opts.silent or false
-    local npm = require("omni-preview.npm")
-
-    local default_previews = {
-        markdown = { command = function() require "peek".open() end },
-        typst = { command = "TypstPreview" },
-        pdf = { command = M.default_system_open },
-        png = { command = M.default_system_open },
-        jpeg = { command = M.default_system_open },
-        csv = { command = "CsvViewEnable" },
-        -- node = { command = b.preview}
-    }
-
-    -- Merge user-provided previews with defaults
-    M.previews = vim.tbl_deep_extend("force", default_previews, opts.previews or {})
-    M.extras = {
-        { trigger = npm.trigger, preview = npm.preview }
-    }
-
+    local defaults = require("omni-preview.defaults")
+    M.previews = vim.tbl_deep_extend("force", defaults.previews, opts.previews or {})
     vim.api.nvim_create_user_command("OmniPreview", M.preview, { desc = "Preview current filetype" })
     vim.keymap.set("n", keybind, ":OmniPreview<CR>", {
         silent = silent,
