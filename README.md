@@ -4,10 +4,11 @@ Lightweight and highly extensible plugin to preview many kinds of files. This pl
 Supported Previews: 
 - [x] Markdown
 - [x] Typst
-- [ ] Images 
+- [x] Images, SVGs, other system standard files
+- [ ] CSV 
 - [ ] Running npm servers
 - [ ] Latex
-- [ ] PDFs
+- [x] PDFs
 
 
 One day I would love to make this plugin behave like Mason.nvim and have a nice list of sources that can be used to install different preview plugins, but that is long in the future and will require a large amount of understanding.  
