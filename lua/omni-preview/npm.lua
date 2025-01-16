@@ -20,7 +20,7 @@ function M.preview()
     -- > However this has the downsides of dealing with different formats, although somewhat standard we may have to deal with node, deno, bun, pnpm, yarn, and any number of new others all the time.
     -- 2. Try to query the network somehow and trace a name back to the current working diectory?
     -- 3. Query system process and try to grep for a certain name?
-    -- In both #2 and #3 we have no garuntee that the server will be running on the same machine or even the same network, or that neovim will be within the correct root directory of the project. This seems like it will be a challanging problem to solve. Maybe you have some suggestions.
+    -- In both #2 and #3 we have no guarantee that the server will be running on the same machine or even the same network, or that neovim will be within the correct root directory of the project. This seems like it will be a challanging problem to solve. Maybe you have some suggestions.
 
     -- for now this will just be hardcoded
     os.execute([[open "http://localhost:5173/"]])

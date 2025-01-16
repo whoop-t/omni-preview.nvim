@@ -1,11 +1,12 @@
 local M = {}
 
 function M.preview()
-
-    for val in M.extras 
-        -- here check each of the values
+    for _, extra in ipairs(M.extras or {}) do
+        if extra.trigger() then
+            extra.preview()
+            return
+        end
     end
-    
 
     local ft = vim.bo.filetype
     local preview = M.previews[ft]
