@@ -1,11 +1,11 @@
 # Omni Preview 
-Lightweight and highly extensible plugin to manage previews for different filetypes. This plugin provides a few of the simplest builtin previews, but generally aims to outsource complex or live previews to other plugins. This repository is more documentation than plugin, with a simple set of functions to glue everything together.
+Lightweight and extensible neovim plugin to manage previews for different filetypes. This plugin provides a few of the simplest builtin previews, but generally aims to outsource complex or live previews to other plugins. OmniPreview aims to keep track of the most common preview plugins in the neovim ecosystem and provide simple configuration defaults to get them working quickly.
 
-**Works out of the box**: 
-- [x] Images Formats: `.png`, `.svg`, `.tiff`, `.jpeg`, `.html`, `.pdfs`
+**Builtin**: 
+- [x] Simple files: `.png`, `.svg`, `.tiff`, `.jpeg`, `.html`, `.pdfs`, etc. 
 - [x] Frontend web servers (`node`, `deno`, `bun`) _Port is currently hardcoded_
 
-**Easy with third party plugins** 
+**Works out of the box with third party** 
 - [x] CSV 
 - [x] Latex
 - [x] Markdown
@@ -27,18 +27,38 @@ Lightweight and highly extensible plugin to manage previews for different filety
 ```lua
 use {
   'sylvanfranklin/omni-preview.nvim',
-  tag = 'v1.*',
   config = function()
     require 'omni-preview'.setup {}
   end,
 }
 ```
 
-## Configure
+### Installing Previews
+Simply installing most preview plugins should be enough to make them work out of the box. OmniPreview will auto setup most preview plugins with sensible defaults. For a full list and the ability to override see TODO 
+
+**For example with ** `Lazy`
+
+```lua 
+{
+    { "toppair/peek.nvim",            lazy = true }, -- markdown
+    { 'chomosuke/typst-preview.nvim', lazy = true }, -- typst
+    { 'hat0uma/csvview.nvim',         lazy = true }, -- csv
+    -- Any other plugins ... 
+}
+```
+
+## Usage
+`:OmniPreviewStart`, `:OmniPreviewStop`, `:OmniPreviewToggle`. 
+
+There is no default keymapping, I recommend setting: 
+
+```lua
+vim.keymap.set("n", "<leader>p", ":OmniPreviewToggle<CR>", { silent = true })
+```
 
 
 #### ROADMAP 🌾
-One day I would love to make this plugin behave like `mason.nvim` with a ui list of preview plugins that can be installed from the ui. That will require a dive into Mason and how it's registry works. 
+Lot's of work to do, this is early days. 
 
-- [ ] Ability to toggle all previews on and off.
-- [ ] Mason like UI. 
+- [ ] Mason like UI and registry. 
+- [ ] Telescope like picker to support multiple types of previews
