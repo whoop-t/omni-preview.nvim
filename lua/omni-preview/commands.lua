@@ -1,5 +1,4 @@
 local M = {}
-
 M.running = {}
 
 M.stop = function()
@@ -78,4 +77,3 @@ function M.start()
 end
 
 return M
-
