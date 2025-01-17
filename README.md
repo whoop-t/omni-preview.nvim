@@ -26,10 +26,10 @@ Lightweight and extensible neovim plugin to manage previews for different filety
 
 ```lua
 use {
-  'sylvanfranklin/omni-preview.nvim',
-  config = function()
-    require 'omni-preview'.setup {}
-  end,
+    'sylvanfranklin/omni-preview.nvim',
+    config = function()
+        require 'omni-preview'.setup {}
+    end,
 }
 ```
 
@@ -39,10 +39,10 @@ Simply installing most preview plugins should be enough to make them work out of
 **For example with** `Lazy`
 
 ```lua 
-    { "toppair/peek.nvim",            lazy = true }, -- markdown
-    { 'chomosuke/typst-preview.nvim', lazy = true }, -- typst
-    { 'hat0uma/csvview.nvim',         lazy = true }, -- csv
-    -- etc
+{ "toppair/peek.nvim",            lazy = true }, -- markdown
+{ 'chomosuke/typst-preview.nvim', lazy = true }, -- typst
+{ 'hat0uma/csvview.nvim',         lazy = true }, -- csv
+-- etc
 ```
 
 ## Usage
@@ -54,9 +54,7 @@ There is no default keymapping, I recommend setting:
 vim.keymap.set("n", "<leader>p", ":OmniPreviewToggle<CR>", { silent = true })
 ```
 
-
 #### ROADMAP 🌾
 Lot's of work to do, this is early days. 
-
 - [ ] Mason like UI and registry. 
 - [ ] Telescope like picker to support multiple types of previews
