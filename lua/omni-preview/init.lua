@@ -1,55 +1,13 @@
 local M = {}
-M.running = false
-
-function M.preview()
-    local ft = vim.bo.filetype
-    local fe = vim.fn.expand("%:e")
-    local trig = false
-    for _, p in ipairs(M.previews or {}) do
-        if type(p.trig) == "string" then
-            if p.trig == ft or p.trig == fe then
-                trig = true
-            end
-        elseif type(p.trig == "function") then
-            if p.trig() then
-                trig = true
-            end
-        end
-
-        if trig then
-            if type(p.cmd) == "string" then
-                vim.cmd(p.cmd)
-                return
-            elseif type(p.cmd) == "function" then
-                p.cmd()
-                return
-            else
-                vim.notify(
-                    "Invalid preview command for filetype: " .. ft,
-                    vim.log.levels.ERROR
-                )
-                return
-            end
-        end
-    end
-
-    vim.notify(
-        "No preview available for filetype: " .. ft,
-        vim.log.levels.WARN
-    )
-end
-
 function M.setup(opts)
     opts = opts or {}
-    local keybind = opts.keybind or "<leader>p"
-    local silent = opts.silent or false
     local defaults = require("omni-preview.defaults")
+    local commands = require("omni-preview.commands")
     M.previews = vim.tbl_deep_extend("force", defaults.previews, opts.previews or {})
-    vim.api.nvim_create_user_command("OmniPreview", M.preview, { desc = "Preview current filetype" })
-    vim.keymap.set("n", keybind, ":OmniPreview<CR>", {
-        silent = silent,
-        desc = "Preview file using OmniPreview",
-    })
+    vim.api.nvim_create_user_command("OmniPreviewStart", commands.start, { desc = "Start preview for current filetype" })
+    vim.api.nvim_create_user_command("OmniPreviewStop", commands.stop, { desc = "Stop preview for current filetype" })
+    vim.api.nvim_create_user_command("OmniPreviewToggle", commands.toggle,
+        { desc = "Toggle preview for current filetype" })
 end
 
 return M

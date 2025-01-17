@@ -10,14 +10,14 @@ M.system_open = function()
 end
 
 M.previews = {
-    { trig = "markdown", cmd = function() require "peek".open() end },
-    { trig = "typst",    cmd = "TypstPreview" },
-    { trig = "pdf",      cmd = M.system_open },
-    { trig = "svg",      cmd = M.system_open },
-    { trig = "png",      cmd = M.system_open },
-    { trig = "jpeg",     cmd = M.system_open },
-    { trig = "html",     cmd = M.system_open },
-    { trig = "csv",      cmd = "CsvViewEnable" },
+    { trig = "markdown", start = function() require "peek".open() end, stop = function() require "peek".close() end },
+    { trig = "typst",    start = "TypstPreview" },
+    { trig = "pdf",      start = M.system_open },
+    { trig = "svg",      start = M.system_open },
+    { trig = "png",      start = M.system_open },
+    { trig = "jpeg",     start = M.system_open },
+    { trig = "html",     start = M.system_open },
+    { trig = "csv",      start = "CsvViewEnable",                      stop = "CsvViewDisable" },
     npm,
 }
 
