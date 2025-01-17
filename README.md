@@ -36,15 +36,13 @@ use {
 ### Installing Previews
 Simply installing most preview plugins should be enough to make them work out of the box. OmniPreview will auto setup most preview plugins with sensible defaults. For a full list and the ability to override see TODO 
 
-**For example with ** `Lazy`
+**For example with** `Lazy`
 
 ```lua 
-{
     { "toppair/peek.nvim",            lazy = true }, -- markdown
     { 'chomosuke/typst-preview.nvim', lazy = true }, -- typst
     { 'hat0uma/csvview.nvim',         lazy = true }, -- csv
-    -- Any other plugins ... 
-}
+    -- etc
 ```
 
 ## Usage
