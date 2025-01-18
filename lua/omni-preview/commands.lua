@@ -1,8 +1,10 @@
 local M = {}
-M.running = {}
+M.running_previews = {}
 
 M.stop = function()
-    if not next(M.running) == nil then
+    local current_buf = vim.api.nvim_get_current_buf()
+    local rp = M.running_previews[current_buf]
+    if rp == nil or not rp.running then
         vim.notify(
             "No running preview found",
             vim.log.levels.WARN
@@ -10,25 +12,28 @@ M.stop = function()
         return
     end
 
-    if M.running.stop == nil then
+    local p = rp.preview
+    if p.stop == nil then
         vim.notify(
-            "Failed to stop running preview",
+            "Failed to stop running preview, no command provided",
             vim.log.levels.ERROR
         )
         return
     end
 
-    if type(M.running.stop) == "string" then
-        vim.cmd(M.running.stop)
-        M.running = {}
-    elseif type(M.running.stop) == "function" then
-        M.running.stop()
-        M.running = {}
+    if type(p.stop) == "string" then
+        M.running_previews[current_buf].running = false
+        vim.cmd(p.stop)
+    elseif type(p.stop) == "function" then
+        M.running_previews[current_buf].running = false
+        p.stop()
     end
 end
 
 M.toggle = function()
-    if next(M.running) == nil then
+    local current_buf = vim.api.nvim_get_current_buf();
+    local p = M.running_previews[current_buf]
+    if p == nil or not p.running then
         M.start()
     else
         M.stop()
@@ -40,12 +45,13 @@ function M.start()
     local fe = vim.fn.expand("%:e")
     local pr = require("omni-preview").previews
     local trig = false
+    local current_buf = vim.api.nvim_get_current_buf()
     for _, p in ipairs(pr or {}) do
         if type(p.trig) == "string" then
             if p.trig == ft or p.trig == fe then
                 trig = true
             end
-        elseif type(p.trig == "function") then
+        elseif type(p.trig) == "function" then
             if p.trig() then
                 trig = true
             end
@@ -54,11 +60,11 @@ function M.start()
         if trig then
             if type(p.start) == "string" then
                 vim.cmd(p.start)
-                M.running = p
+                M.running_previews[current_buf] = { running = true, preview = p }
                 return
             elseif type(p.start) == "function" then
                 p.start()
-                M.running = p
+                M.running_previews[current_buf] = { running = true, preview = p }
                 return
             else
                 vim.notify(
