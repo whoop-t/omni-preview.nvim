@@ -3,8 +3,10 @@
   <img src="./preview.svg" />
 </p>
 
-Lightweight and extensible neovim plugin to manage previews for different filetypes. This plugin provides a few of the simplest builtin previews, but generally aims to outsource complex or live previews to other plugins. OmniPreview aims to keep track of the most common preview plugins in the neovim ecosystem and provide simple configuration defaults to get them working quickly. 
-Other plugins exists with similar behavior, this is just my personal crack at it that I've open sourced just in case someone else finds it useful. 
+## What does this do? 👀
+* Provides a master list of nvim preview plugins for different filetypes along with simple examples. 
+* Creates a command which knows how to stop and start many of these plugins.
+* Optionally provides sane defaults.
 
 **Builtin**: 
 - [x] Simple files: `.png`, `.svg`, `.tiff`, `.jpeg`, `.html`, `.pdfs`, etc. 
