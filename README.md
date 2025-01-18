@@ -8,7 +8,7 @@
 * Creates a command which knows how to stop and start many of these plugins.
 * Optionally provides sane defaults.
 
-> [!ATTENTION]
+> [!IMPORTANT]
 > Still in early stages and lacking support for many plugins, PR's to support your plugin are super welcome! I'll try to add as many as I can.
 
 **Builtin**: 
