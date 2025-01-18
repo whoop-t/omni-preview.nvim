@@ -3,10 +3,9 @@
   <img src="./preview.svg" />
 </p>
 
-## What does this do? 👀
-* Provides a master list of nvim preview plugins for different filetypes along with simple examples. 
-* Creates a command which knows how to stop and start many of these plugins.
-* Optionally provides sane defaults.
+Provides a master list of nvim preview plugins for different filetypes and a
+command to tie them together. Providesane defaults and gets everything working
+quickly. 
 
 > [!IMPORTANT]
 > Still in early stages and lacking support for many plugins, PR's to support your plugin are super welcome! I'll try to add as many as I can.
