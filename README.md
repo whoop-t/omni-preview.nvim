@@ -1,6 +1,6 @@
 # Omni-Preview.nvim
 
-https://github.com/SylvanFranklin/omni-preview.nvim/blob/45f9fec809b484b8f26ea0ac97305884a281b523/demo.mp4
+https://github.com/SylvanFranklin/omni-preview.nvim/blob/c63f16cee7900313104f80f900700219b8a70812/demo.mov
 
 Provides a master list of nvim preview plugins for different filetypes and a
 command to tie them together. Providesane defaults and gets everything working
