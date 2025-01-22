@@ -1,9 +1,9 @@
 # Omni-Preview.nvim
 
 
-<video controls="" width="800" height="500" muted="" loop="" autoplay="">
-    <source src="https://github.com/SylvanFranklin/omni-preview.nvim/blob/c63f16cee7900313104f80f900700219b8a70812/demo.mov" type="video/mov">
-</video>
+
+https://github.com/user-attachments/assets/d6ec4edc-d085-4b73-8388-e5e126e7f681
+
 
 
 Provides a master list of nvim preview plugins for different filetypes and a
