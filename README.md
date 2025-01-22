@@ -1,14 +1,15 @@
 # Omni-Preview.nvim
 
+Provides a master list of nvim preview plugins for different filetypes and a
+command to tie them together. Providesane defaults and gets everything working
+quickly. 
+
 
 
 https://github.com/user-attachments/assets/d6ec4edc-d085-4b73-8388-e5e126e7f681
 
 
 
-Provides a master list of nvim preview plugins for different filetypes and a
-command to tie them together. Providesane defaults and gets everything working
-quickly. 
 
 > [!IMPORTANT]
 > Still in early stages and lacking support for many plugins, PR's to support your plugin are super welcome! I'll try to add as many as I can.
