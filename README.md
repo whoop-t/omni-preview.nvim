@@ -1,7 +1,11 @@
 # Omni-Preview.nvim
+
 <p align="center">
-  <img src="./preview.svg" />
+    <video controls>
+      <source src="video.mov" type="demo/mp4">
+    </video>
 </p>
+
 
 Provides a master list of nvim preview plugins for different filetypes and a
 command to tie them together. Providesane defaults and gets everything working
