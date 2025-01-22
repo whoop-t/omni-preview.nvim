@@ -1,19 +1,22 @@
 local M = {}
 M.running_previews = {}
 
-M.stop = function()
+M.stop = function(debug)
+    local debug = debug or false
     local current_buf = vim.api.nvim_get_current_buf()
     local rp = M.running_previews[current_buf]
-    if rp == nil or not rp.running then
-        vim.notify(
-            "No running preview found",
-            vim.log.levels.WARN
-        )
-        return
+    if debug then
+        if rp == nil or not rp.running then
+            vim.notify(
+                "No running preview found",
+                vim.log.levels.WARN
+            )
+            return
+        end
     end
 
     local p = rp.preview
-    if p.stop == nil then
+    if p.stop == nil and debug then
         vim.notify(
             "Failed to stop running preview, no command provided",
             vim.log.levels.ERROR

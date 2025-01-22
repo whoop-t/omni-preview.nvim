@@ -9,6 +9,7 @@ M.system_open = function()
     end
 end
 
+-- TODO consolidate the default previews using some kind of loop
 M.previews = {
     { name = "typst-preview", trig = "typst", start = "TypstPreview", stop = "TypstPreviewStop" },
     { name = "vimtex",        trig = "tex",   start = "LatexStart" },
@@ -19,6 +20,18 @@ M.previews = {
         stop = "CsvViewDisable",
     },
     {
+        name = "markdown-preview",
+        trig = "markdown",
+        start = "MarkdownPreview",
+        stop = "MarkdownPreviewStop",
+    },
+    {
+        name = "markview",
+        trig = "markdown",
+        start = "Markview",
+        stop = "",
+    },
+    {
         name = "peek",
         trig = "markdown",
         start = function() require "peek".open() end,
@@ -27,8 +40,13 @@ M.previews = {
     { trig = "pdf",  start = M.system_open, name = "builtin" },
     { trig = "svg",  start = M.system_open, name = "builtin" },
     { trig = "png",  start = M.system_open, name = "billtin" },
+    { trig = "tif",  start = M.system_open, name = "billtin" },
+    { trig = "tiff", start = M.system_open, name = "billtin" },
     { trig = "jpeg", start = M.system_open, name = "builtin" },
     { trig = "html", start = M.system_open, name = "builtin" },
+    { trig = "gif",  start = M.system_open, name = "builtin" },
+    { trig = "jpg",  start = M.system_open, name = "builtin" },
+    { trig = "webp", start = M.system_open, name = "builtin" },
 }
 
 return M
