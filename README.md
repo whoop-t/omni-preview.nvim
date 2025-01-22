@@ -1,9 +1,7 @@
 # Omni-Preview.nvim
 
 Provides a master list of nvim preview plugins for different filetypes and a
-command to tie them together. Providesane defaults and gets everything working
-quickly. 
-
+command to tie them together. Get everything working quickly, coming soon a list of filetypes and sample configurations!
 
 
 https://github.com/user-attachments/assets/d6ec4edc-d085-4b73-8388-e5e126e7f681
@@ -83,8 +81,10 @@ Sometimes these plugins have behavior that you want to change, simply call setup
 There is no default keymapping, I recommend setting: 
 
 ```lua
-vim.keymap.set("n", "<leader>p", ":OmniPreviewToggle<CR>", { silent = true })
+vim.keymap.set("n", "<leader>p", ":OmniPreviewStart<CR>", { silent = true })
 ```
+
+I often just close the preview manually since some of them don't have defined stop behavior, for instance system level preview tools.  
 
 #### ROADMAP 🌾
 Lot's of work to do, this is early days. 
