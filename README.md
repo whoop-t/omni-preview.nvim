@@ -3,8 +3,8 @@
 Provides a master list of nvim preview plugins for different filetypes and a
 command to tie them together. The goal is to get everything working quickly, while keeping open advanced configuration.
 
-https://github.com/user-attachments/assets/d6ec4edc-d085-4b73-8388-e5e126e7f681
 
+https://github.com/user-attachments/assets/e9c0a587-0536-478d-b408-30422ac8e73b
 
 
 
