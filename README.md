@@ -146,3 +146,9 @@ Lot's of work to do, this is early days.
 - [ ] More config options for more plugins
 - [ ] More advanced support for LaTeX 
 - [ ] Support for multiple previews on a single filetype
+
+
+#### Alternatives
+
+- The OG [knap](https://github.com/frabjous/knap), requires a bit more tinkering to get certain previews working.    
+- Live support for many types [live-preview.nvim](https://github.com/brianhuster/live-preview.nvim). I might try to intergrate this in omni soon.
