@@ -112,6 +112,12 @@ Remember to add these as dependencies or set them up manually with `.setup` if y
 { "toppair/peek.nvim", lazy = true, build = "deno task --quiet build:fast" },
 ```
 
+- [github-preview.nvim](https://github.com/wallpants/github-preview.nvim?tab=readme-ov-file) Great plugin with full github parity, requires `bun.sh`
+
+```lua
+{ "wallpants/github-preview.nvim", lazy = true },
+```
+
 - [mardown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) Slightly older but still great.
 
 ```lua
@@ -154,3 +160,5 @@ Lot's of work to do, this is early days.
 
 - The OG [knap](https://github.com/frabjous/knap), requires a bit more tinkering to get certain previews working.    
 - Live support for many types [live-preview.nvim](https://github.com/brianhuster/live-preview.nvim). I might try to intergrate this in omni soon.
+
+go give stars to the authors of these and the preview plugins, they are the real heros.
