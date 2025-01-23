@@ -1,11 +1,9 @@
 # Omni-Preview.nvim
 
 Provides a master list of nvim preview plugins for different filetypes and a
-command to tie them together. The goal is to get everything working quickly, while keeping open advanced configuration.
-
+command to tie them together. The goal is to get everything working quickly, while keeping open advanced configuration. Simple plugin + Awesome list of previews.
 
 https://github.com/user-attachments/assets/e9c0a587-0536-478d-b408-30422ac8e73b
-
 
 
 > [!IMPORTANT]
@@ -77,20 +75,24 @@ Sometimes these plugins have behavior that you want to change, simply call setup
 ```
 
 ## Usage
-`:OmniPreviewStart`, `:OmniPreviewStop`, `:OmniPreviewToggle`. 
+
+One command to rule them all
+`:OmniPreview {args}`
+
+Three intuitive subcommands
+`:OmniPreview start`, `:OmniPreview stop`, `:OmniPreview toggle`. 
 
 There is no default keymapping for the, I recommend setting: 
 
 ```lua
-vim.keymap.set("n", "<leader>p", ":OmniPreviewStart<CR>", { silent = true })
+vim.keymap.set("n", "<leader>p", ":OmniPreview toggle<CR>", { silent = true })
 ```
 
-I often just close the preview manually since some of them don't have defined stop behavior, for instance system level preview tools.  
+I often just close the preview manually since some of them don't have defined stop behavior, for instance system level preview tools. Maybe there is some way to close these efficiently but I'm not all that aware of it.    
 
 ## Filetypes
 
-Remember to add these as dependencies or set them up manually with `.setup`
-
+Remember to add these as dependencies or set them up manually with `.setup` if you want your own preferences. The Lazy package manager will call default setup functions on everything defined as a depencency. While this does save some complexity, it also often means less than desirable default behavior. Because of this I like to set things up individually. 
 
 #### Typst
 
@@ -144,7 +146,7 @@ Lot's of work to do, this is early days.
 - [ ] Mason like UI and registry
 - [ ] Telescope like picker to support multiple types of previews
 - [ ] More config options for more plugins
-- [ ] More advanced support for LaTeX 
+- [ ] More coverage of LaTeX 
 - [ ] Support for multiple previews on a single filetype
 
 
