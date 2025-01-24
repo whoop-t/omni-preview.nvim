@@ -13,7 +13,7 @@ end
 
 function M.setup(opts)
     opts = opts or {}
-    local defaults = require("omni-preview.defaults").previews
+    local defaults = require("omni-preview.defaults").build_config()
     M.previews = vim.tbl_deep_extend("force", defaults, opts.previews or {})
     vim.api.nvim_create_user_command("OmniPreview", M.command,
         {
