@@ -10,15 +10,14 @@ M.system_open = function()
 end
 
 M.build_config = function()
-    local trim = M.previews
-    for index, preview in ipairs(trim) do
-        if preview.name ~= "builtin" then
-            local ok, module = pcall(require, preview.name)
-            if not ok or module == nil then
-                table.remove(trim, index)
-            end
+    local trim = {}
+    for index, preview in ipairs(M.previews) do
+        local ok, module = pcall(require, preview.name)
+        if preview.name == "builtin" or (ok and module ~= nil) then
+            table.insert(trim, preview)
         end
     end
+
     return trim
 end
 
@@ -33,10 +32,10 @@ M.previews = {
         stop = "CsvViewDisable",
     },
     {
-        name = "markdown-preview",
+        name = "data-viewer",
         trig = "csv",
         start = "DataViewer",
-        stop = "",
+        stop = "DataViewerClose",
     },
     {
         name = "markdown-preview",
@@ -63,6 +62,12 @@ M.previews = {
         stop = "LiveServerStop",
     },
     {
+        name = 'nvim-asciidoc-preview',
+        trig = 'asciidoc',
+        start = "AsciiDocPreview",
+        stop = "AsciiDocPreviewStop",
+    },
+    {
         name = "peek",
         trig = "markdown",
         start = function() require "peek".open() end,
@@ -70,9 +75,9 @@ M.previews = {
     },
     { trig = "pdf",  start = M.system_open, name = "builtin" },
     { trig = "svg",  start = M.system_open, name = "builtin" },
-    { trig = "png",  start = M.system_open, name = "billtin" },
-    { trig = "tif",  start = M.system_open, name = "billtin" },
-    { trig = "tiff", start = M.system_open, name = "billtin" },
+    { trig = "png",  start = M.system_open, name = "builtin" },
+    { trig = "tif",  start = M.system_open, name = "builtin" },
+    { trig = "tiff", start = M.system_open, name = "builtin" },
     { trig = "jpeg", start = M.system_open, name = "builtin" },
     { trig = "html", start = M.system_open, name = "builtin" },
     { trig = "gif",  start = M.system_open, name = "builtin" },
