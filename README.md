@@ -150,6 +150,13 @@ Remember to add these as dependencies or set them up manually with `.setup` if y
 ```
 
 #### Other
+
+- [nvim-asciidoc-preview](https://github.com/tigion/nvim-asciidoc-preview?tab=readme-ov-file#installation)
+
+```lua
+    {'tigion/nvim-asciidoc-preview', lazy = true}
+```
+
 For images and other types I just use the unix `open` command. You can override that behavior by passing a filetype and start and stop string or function.
 
 ```lua
@@ -159,6 +166,8 @@ require("omni-preview").setup({
     }
 })
 ```
+
+
 
 #### ROADMAP 🌾
 Lot's of work to do, this is early days. 
