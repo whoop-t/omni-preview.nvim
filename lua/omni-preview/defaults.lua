@@ -9,6 +9,19 @@ M.system_open = function()
     end
 end
 
+M.build_config = function()
+    local trim = M.previews
+    for index, preview in ipairs(trim) do
+        if preview.name ~= "builtin" then
+            local ok, module = pcall(require, preview.name)
+            if not ok or module == nil then
+                table.remove(trim, index)
+            end
+        end
+    end
+    return trim
+end
+
 -- TODO consolidate the default previews using some kind of loop
 M.previews = {
     { name = "typst-preview", trig = "typst", start = "TypstPreview", stop = "TypstPreviewStop" },
@@ -21,9 +34,21 @@ M.previews = {
     },
     {
         name = "markdown-preview",
+        trig = "csv",
+        start = "DataViewer",
+        stop = "",
+    },
+    {
+        name = "markdown-preview",
         trig = "markdown",
         start = "MarkdownPreview",
         stop = "MarkdownPreviewStop",
+    },
+    {
+        name = "github-preview",
+        trig = "markdown",
+        start = function() require "github-preview".fns.start() end,
+        stop = function() require "github-preview".fns.stop() end,
     },
     {
         name = "markview",
