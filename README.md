@@ -128,6 +128,19 @@ Remember to add these as dependencies or set them up manually with `.setup` if y
 { "OXY2DEV/markview.nvim", lazy = true}
 ```
 
+#### HTML
+
+- [Live-Server.nvim](https://github.com/barrett-ruth/live-server.nvim) Requires node package live server
+
+```lua
+    {
+        'barrett-ruth/live-server.nvim',
+        build = 'pnpm add -g live-server',
+        cmd = { 'LiveServerStart', 'LiveServerStop' },
+        config = true
+    }
+```
+
 #### CSV
 
 - [csvview.nvim](https://github.com/hat0uma/csvview.nvim) Conceal in editor

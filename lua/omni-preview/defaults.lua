@@ -57,6 +57,12 @@ M.previews = {
         stop = "",
     },
     {
+        name = 'live-server',
+        trig = 'html',
+        start = "LiveServerStart",
+        stop = "LiveServerStop",
+    },
+    {
         name = "peek",
         trig = "markdown",
         start = function() require "peek".open() end,
