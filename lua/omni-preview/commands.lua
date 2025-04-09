@@ -45,7 +45,7 @@ end
 
 function M.start()
     local ft = vim.bo.filetype
-    local fe = vim.fn.expand("%:e")
+    local fe = vim.fn.expand("%:e"):lower()
     local pr = require("omni-preview").previews
     local trig = false
     local current_buf = vim.api.nvim_get_current_buf()
@@ -71,7 +71,7 @@ function M.start()
                 return
             else
                 vim.notify(
-                    "Invalid preview command for filetype: " .. ft,
+                    "Invalid preview command for filetype: " .. fe,
                     vim.log.levels.ERROR
                 )
                 return
@@ -80,7 +80,7 @@ function M.start()
     end
 
     vim.notify(
-        "No preview available for filetype: " .. ft,
+        "No preview available for filetype: " .. fe,
         vim.log.levels.WARN
     )
 end
