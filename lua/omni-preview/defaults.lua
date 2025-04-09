@@ -3,7 +3,7 @@ local M = {}
 
 M.system_open = function()
     local filename = vim.fn.expand("%:p")
-    local success = os.execute("open " .. filename)
+    local success = os.execute("open " .. vim.fn.shellescape(filename))
     if not success then
         print("Could not use system command \"open\" to open " .. filename)
     end
