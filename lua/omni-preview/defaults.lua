@@ -73,6 +73,31 @@ M.previews = {
         start = function() require "peek".open() end,
         stop = function() require "peek".close() end,
     },
+    {
+        name = "cloak",
+        trig = function()
+          local cloak = require "cloak"
+          local patterns = cloak.opts.patterns
+          -- get file_patterns config straight from cloak
+          local file_patterns = patterns[1].file_pattern
+          -- can be string or table of strings
+          if type(file_patterns) == 'string' then
+            file_patterns = { file_patterns }
+          end
+          -- get current buffer filename without path
+          local base_name = vim.fn.expand("%:t")
+          for _, file_pattern in ipairs(file_patterns) do
+            if base_name ~= nil and
+                vim.fn.match(base_name, vim.fn.glob2regpat(file_pattern)) ~= -1 then
+              return true
+            end
+          end
+
+          return false
+        end,
+        start = function() require "cloak".enable() end,
+        stop = function() require "cloak".disable() end,
+    },
     { trig = "pdf",  start = M.system_open, name = "builtin" },
     { trig = "svg",  start = M.system_open, name = "builtin" },
     { trig = "png",  start = M.system_open, name = "builtin" },
