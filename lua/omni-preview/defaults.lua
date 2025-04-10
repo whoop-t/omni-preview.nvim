@@ -132,7 +132,11 @@ M.previews = {
     {
         name = "cloak",
         trig = function()
-          local cloak = require "cloak"
+          local ok, cloak = pcall(require, "cloak")
+          if not ok then
+            return false
+          end
+
           local patterns = cloak.opts.patterns
           local file_patterns = patterns[1].file_pattern
           if type(file_patterns) == 'string' then
@@ -151,7 +155,12 @@ M.previews = {
         stop = function() require "cloak".disable() end,
         global = true,
         running = (function ()
-          local enabled = require "cloak".opts.enabled
+          local ok, cloak = pcall(require, "cloak")
+          if not ok then
+              return {}
+          end
+
+          local enabled = cloak.opts.enabled
 
           if not enabled then
               return {}
