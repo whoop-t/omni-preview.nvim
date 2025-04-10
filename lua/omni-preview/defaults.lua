@@ -132,32 +132,42 @@ M.previews = {
     {
         name = "cloak",
         trig = function()
-          local cloak = require "cloak"
-          local patterns = cloak.opts.patterns
-          local file_patterns = patterns[1].file_pattern
-          if type(file_patterns) == 'string' then
-            file_patterns = { file_patterns }
-          end
-          local base_name = vim.fn.expand("%:t")
-          for _, file_pattern in ipairs(file_patterns) do
-            if base_name ~= nil and
-                vim.fn.match(base_name, vim.fn.glob2regpat(file_pattern)) ~= -1 then
-              return true
+            local ok, cloak = pcall(require, "cloak")
+            if not ok then
+                return false
             end
-          end
-          return false
+
+            local cloak = require "cloak"
+            local patterns = cloak.opts.patterns
+            local file_patterns = patterns[1].file_pattern
+            if type(file_patterns) == 'string' then
+              file_patterns = { file_patterns }
+            end
+            local base_name = vim.fn.expand("%:t")
+            for _, file_pattern in ipairs(file_patterns) do
+              if base_name ~= nil and
+                  vim.fn.match(base_name, vim.fn.glob2regpat(file_pattern)) ~= -1 then
+                return true
+              end
+            end
+            return false
         end,
         start = function() require "cloak".enable() end,
         stop = function() require "cloak".disable() end,
         global = true,
         running = (function ()
-          local enabled = require "cloak".opts.enabled
+            local ok, cloak = pcall(require, "cloak")
+            if not ok then
+                return {}
+            end
+   
+            local enabled = cloak.opts.enabled
 
-          if not enabled then
-              return {}
-          end
+            if not enabled then
+                return {}
+            end
 
-          return { ["cloak"] = true } -- cloak is global
+            return { ["cloak"] = true } -- cloak is global
         end)(),
     },
     { trig = "pdf",  start = M.system_open, name = "builtin" },
