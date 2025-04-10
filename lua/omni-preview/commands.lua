@@ -1,26 +1,22 @@
-local defaults = require("omni-preview.defaults")
-
 local M = {}
+M.running_previews = {}
 
 M.stop = function(debug)
     local debug = debug or false
-    local rp = defaults.find_running_preview()
-
-    if not rp and debug then
-        vim.notify(
-            "No running preview found",
-            vim.log.levels.WARN
-        )
-        return
+    local current_buf = vim.api.nvim_get_current_buf()
+    local rp = M.running_previews[current_buf]
+    if debug then
+        if rp == nil or not rp.running then
+            vim.notify(
+                "No running preview found",
+                vim.log.levels.WARN
+            )
+            return
+        end
     end
 
-    if not rp then
-      return
-    end
-
-    local key = rp.key
-
-    if rp.preview.stop == nil and debug then
+    local p = rp.preview
+    if p.stop == nil and debug then
         vim.notify(
             "Failed to stop running preview, no command provided",
             vim.log.levels.ERROR
@@ -28,18 +24,19 @@ M.stop = function(debug)
         return
     end
 
-    rp.preview.running[key] = nil
-    if type(rp.preview.stop) == "string" then
-        vim.cmd(rp.preview.stop)
-    elseif type(rp.preview.stop) == "function" then
-        rp.preview.stop()
+    if type(p.stop) == "string" then
+        M.running_previews[current_buf].running = false
+        vim.cmd(p.stop)
+    elseif type(p.stop) == "function" then
+        M.running_previews[current_buf].running = false
+        p.stop()
     end
 end
 
 M.toggle = function()
-    local rp = defaults.find_running_preview()
-
-    if not rp then
+    local current_buf = vim.api.nvim_get_current_buf();
+    local p = M.running_previews[current_buf]
+    if p == nil or not p.running then
         M.start()
     else
         M.stop()
@@ -47,36 +44,43 @@ M.toggle = function()
 end
 
 function M.start()
-    local key = nil
+    local ft = vim.bo.filetype
+    local fe = vim.fn.expand("%:e"):lower()
+    local pr = require("omni-preview").previews
+    local trig = false
     local current_buf = vim.api.nvim_get_current_buf()
-    local p = defaults.get_triggerable_preview()
-  
-    if p then
-        key = p.global and p.name or current_buf
-    
-        if type(p.start) == "string" then
-            vim.cmd(p.start)
-            if p.running then
-              p.running[key] = true
+    for _, p in ipairs(pr or {}) do
+        if type(p.trig) == "string" then
+            if p.trig == ft or p.trig == fe then
+                trig = true
             end
-            return
-        elseif type(p.start) == "function" then
-            p.start()
-            if p.running then
-              p.running[key] = true
+        elseif type(p.trig) == "function" then
+            if p.trig() then
+                trig = true
             end
-            return
-        else
-            vim.notify(
-                "Invalid preview command for current filetype",
-                vim.log.levels.ERROR
-            )
-            return
+        end
+
+        if trig then
+            if type(p.start) == "string" then
+                vim.cmd(p.start)
+                M.running_previews[current_buf] = { running = true, preview = p }
+                return
+            elseif type(p.start) == "function" then
+                p.start()
+                M.running_previews[current_buf] = { running = true, preview = p }
+                return
+            else
+                vim.notify(
+                    "Invalid preview command for filetype: " .. fe,
+                    vim.log.levels.ERROR
+                )
+                return
+            end
         end
     end
 
     vim.notify(
-        "No preview available for current filetype",
+        "No preview available for filetype: " .. fe,
         vim.log.levels.WARN
     )
 end
