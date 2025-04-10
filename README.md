@@ -47,7 +47,7 @@ Simply installing plugins as dependencies calls `.setup` which is usually enough
 
 ```lua 
 {
-    "sylvanfranklin/omni-preview",
+    "sylvanfranklin/omni-preview.nvim",
     dependencies = {
         -- Typst
         { 'chomosuke/typst-preview.nvim', lazy = true },
@@ -62,7 +62,7 @@ Sometimes these plugins have behavior that you want to change, simply call setup
 
 ```lua
 {
-    "sylvanfranklin/omni-preview",
+    "sylvanfranklin/omni-preview.nvim",
     dependencies = {
         -- for markdown
         { "toppair/peek.nvim", lazy = true, build = "deno task --quiet build:fast" } 
