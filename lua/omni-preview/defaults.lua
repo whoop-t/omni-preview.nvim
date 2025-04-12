@@ -109,6 +109,13 @@ M.previews = {
         running = {},
     },
     {
+        name = "render-markdown",
+        trig = "markdown",
+        start = "RenderMarkdown enable",
+        stop = "RenderMarkdown disable",
+        running = {},
+    },
+    {
         name = 'live-server',
         trig = 'html',
         start = "LiveServerStart",

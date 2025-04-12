@@ -124,9 +124,17 @@ Remember to add these as dependencies or set them up manually with `.setup` if y
 ```lua
 {"iamcco/markdown-preview.nvim", lazy = true}
 ```
+
 - [markview.nvim](https://github.com/OXY2DEV/markview.nvim) In editor conceal based preview (also requires treesitter and dev icons)
+
 ```lua
 { "OXY2DEV/markview.nvim", lazy = true}
+```
+
+- [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) In editor conceal based preview (also requires treesitter and dev icons(optional))
+
+```lua
+{ "MeanderingProgrammer/render-markdown.nvim", lazy = true}
 ```
 
 #### HTML
