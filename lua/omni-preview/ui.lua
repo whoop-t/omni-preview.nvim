@@ -13,7 +13,7 @@ M.close_float = function(buf, win)
   end
 end
 
-M.create_float_window = function(previews)
+M.create_float_window = function(previews, callback)
   -- Create a scratch buffer
   local buf = vim.api.nvim_create_buf(false, true)
 
@@ -61,8 +61,10 @@ M.create_float_window = function(previews)
 
     M.close_float(buf, float)
 
-    -- start AFTER closing picker or it will use wrong buf
-    defaults.start_preview(p)
+    -- start/close AFTER closing picker or it will use wrong buf
+    -- callback that will start or close the preview
+    -- this can be whatever function that needs to be passed in to do something
+    callback(p)
   end, { buffer = buf, silent = true })
 end
 

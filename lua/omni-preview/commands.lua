@@ -4,26 +4,17 @@ local ui = require("omni-preview.ui")
 local M = {}
 
 M.stop = function()
-    local running_plugins = defaults.find_running_previews()
+    local useable_previews = defaults.get_triggerable_previews()
 
-    if not running_plugins then
+    if not useable_previews then
         return
     end
 
-    if #running_plugins > 1 then
-      ui.create_float_window(running_plugins)
+    -- Only pop ui if there are multiple options
+    if #useable_previews > 1 then
+      ui.create_float_window(useable_previews, defaults.stop_preview)
     else
-      defaults.stop_preview(running_plugins[1])
-    end
-end
-
-M.toggle = function()
-    local rp = defaults.find_running_previews()
-
-    if not rp then
-        M.start()
-    else
-        M.stop()
+      defaults.stop_preview(useable_previews[1])
     end
 end
 
@@ -34,8 +25,9 @@ M.start = function()
         return
     end
 
+    -- Only pop ui if there are multiple options
     if #useable_previews > 1 then
-      ui.create_float_window(useable_previews)
+      ui.create_float_window(useable_previews, defaults.start_preview)
     else
       defaults.start_preview(useable_previews[1])
     end
