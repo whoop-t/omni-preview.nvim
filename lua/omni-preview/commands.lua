@@ -1,43 +1,24 @@
 local defaults = require("omni-preview.defaults")
+local ui = require("omni-preview.ui")
 
 local M = {}
 
-M.stop = function(debug)
-    local debug = debug or false
-    local rp = defaults.find_running_preview()
+M.stop = function()
+    local running_plugins = defaults.find_running_previews()
 
-    if not rp and debug then
-        vim.notify(
-            "No running preview found",
-            vim.log.levels.WARN
-        )
+    if not running_plugins then
         return
     end
 
-    if not rp then
-      return
-    end
-
-    local key = rp.key
-
-    if rp.preview.stop == nil and debug then
-        vim.notify(
-            "Failed to stop running preview, no command provided",
-            vim.log.levels.ERROR
-        )
-        return
-    end
-
-    rp.preview.running[key] = nil
-    if type(rp.preview.stop) == "string" then
-        vim.cmd(rp.preview.stop)
-    elseif type(rp.preview.stop) == "function" then
-        rp.preview.stop()
+    if #running_plugins > 1 then
+      ui.create_float_window(running_plugins)
+    else
+      defaults.stop_preview(running_plugins[1])
     end
 end
 
 M.toggle = function()
-    local rp = defaults.find_running_preview()
+    local rp = defaults.find_running_previews()
 
     if not rp then
         M.start()
@@ -46,39 +27,18 @@ M.toggle = function()
     end
 end
 
-function M.start()
-    local key = nil
-    local current_buf = vim.api.nvim_get_current_buf()
-    local p = defaults.get_triggerable_preview()
-  
-    if p then
-        key = p.global and p.name or current_buf
-    
-        if type(p.start) == "string" then
-            vim.cmd(p.start)
-            if p.running then
-              p.running[key] = true
-            end
-            return
-        elseif type(p.start) == "function" then
-            p.start()
-            if p.running then
-              p.running[key] = true
-            end
-            return
-        else
-            vim.notify(
-                "Invalid preview command for current filetype",
-                vim.log.levels.ERROR
-            )
-            return
-        end
+M.start = function()
+    local useable_previews = defaults.get_triggerable_previews()
+
+    if not useable_previews then
+        return
     end
 
-    vim.notify(
-        "No preview available for current filetype",
-        vim.log.levels.WARN
-    )
+    if #useable_previews > 1 then
+      ui.create_float_window(useable_previews)
+    else
+      defaults.start_preview(useable_previews[1])
+    end
 end
 
 return M

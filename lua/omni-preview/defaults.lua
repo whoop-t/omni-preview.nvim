@@ -22,41 +22,114 @@ M.build_config = function()
 end
 
 ---@return Preview | nil
-M.get_triggerable_preview = function()
+M.get_triggerable_previews = function()
     local ft = vim.bo.filetype
     local fe = vim.fn.expand("%:e"):lower()
     local pr = require("omni-preview").previews
+    local useable_previews = {}
+
     for _, p in ipairs(pr or {}) do
         if type(p.trig) == "string" then
             if p.trig == ft or p.trig == fe then
-                return p
-            end
-        elseif type(p.trig) == "function" then
-            if p.trig() then
-                return p
+                table.insert(useable_previews, p)
             end
         end
+        if type(p.trig) == "function" then
+            if p.trig() then
+                table.insert(useable_previews, p)
+            end
+        end
+    end
+
+    if #useable_previews >= 1 then
+      return useable_previews
     end
 
     return nil
 end
 
-M.find_running_preview = function ()
+-- assumes ALL preview names are unique
+M.find_preview_by_name = function(name)
+    local pr = require("omni-preview").previews
+
+    for _, p in ipairs(pr) do
+      if p.name == name then
+          return p
+      end
+    end
+end
+
+M.find_running_previews = function()
     local key = nil
     local current_buf = vim.api.nvim_get_current_buf()
-    local p = M.get_triggerable_preview()
+    local useable_previews = M.get_triggerable_previews()
 
-    if not p or not p.running then
+    if not useable_previews then
         return nil
     end
 
-    key = p.global and p.name or current_buf
+    local running_previews = {}
+    for _, preview in ipairs(useable_previews) do
+        key = preview.global and preview.name or current_buf
 
-    if not p.running[key] then
-        return nil
+        if preview.running[key] then
+            table.insert(running_previews, { preview = preview, key = key })
+        end
     end
 
-    return { preview = p, key = key }
+    return running_previews
+end
+
+M.start_preview = function(preview)
+    local key = nil
+    local current_buf = vim.api.nvim_get_current_buf()
+
+    if preview then
+        key = preview.global and preview.name or current_buf
+
+        if type(preview.start) == "string" then
+            vim.cmd(preview.start)
+            if preview.running then
+              preview.running[key] = true
+            end
+            return
+        elseif type(preview.start) == "function" then
+            preview.start()
+            if preview.running then
+              preview.running[key] = true
+            end
+            return
+        end
+    end
+
+
+    vim.notify(
+        "Preview command not found or invalid for current filetype",
+        vim.log.levels.WARN
+    )
+end
+
+M.stop_preview = function(running_plugin)
+    if not running_plugin then
+      return
+    end
+
+    local key = running_plugin.key
+
+    if running_plugin.preview.stop == nil and debug then
+        vim.notify(
+            "Failed to stop running preview, no command provided",
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
+    running_plugin.preview.running[key] = nil
+    if type(running_plugin.preview.stop) == "string" then
+        vim.cmd(running_plugin.preview.stop)
+    elseif type(running_plugin.preview.stop) == "function" then
+        running_plugin.preview.stop()
+    end
 end
 
 ---@class Preview
@@ -113,6 +186,7 @@ M.previews = {
         trig = "markdown",
         start = "RenderMarkdown enable",
         stop = "RenderMarkdown disable",
+        global = true,
         running = {},
     },
     {
