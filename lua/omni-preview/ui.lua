@@ -13,7 +13,7 @@ M.close_float = function(buf, win)
   end
 end
 
-M.create_float_window = function(previews, callback)
+M.create_float_window = function(previews, title, callback)
   -- Create a scratch buffer
   local buf = vim.api.nvim_create_buf(false, true)
 
@@ -36,6 +36,8 @@ M.create_float_window = function(previews, callback)
     col = (vim.o.columns - width) / 2,
     style = "minimal",
     border = "rounded",
+    title = title,
+    title_pos = 'center'
   })
 
   -- line numbers

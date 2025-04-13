@@ -12,7 +12,7 @@ M.stop = function()
 
     -- Only pop ui if there are multiple options
     if #useable_previews > 1 then
-      ui.create_float_window(useable_previews, defaults.stop_preview)
+      ui.create_float_window(useable_previews, "Stop Preview", defaults.stop_preview)
     else
       defaults.stop_preview(useable_previews[1])
     end
@@ -27,7 +27,7 @@ M.start = function()
 
     -- Only pop ui if there are multiple options
     if #useable_previews > 1 then
-      ui.create_float_window(useable_previews, defaults.start_preview)
+      ui.create_float_window(useable_previews, "Start Preview", defaults.start_preview)
     else
       defaults.start_preview(useable_previews[1])
     end
