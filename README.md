@@ -80,13 +80,14 @@ Sometimes these plugins have behavior that you want to change, simply call setup
 One command to rule them all
 `:OmniPreview {args}`
 
-Three intuitive subcommands
-`:OmniPreview start`, `:OmniPreview stop`, `:OmniPreview toggle`. 
+Two intuitive subcommands
+`:OmniPreview start`, `:OmniPreview stop`. 
 
-There is no default keymapping for the, I recommend setting: 
+There is no default keymapping, I recommend setting: 
 
 ```lua
-vim.keymap.set("n", "<leader>p", ":OmniPreview toggle<CR>", { silent = true })
+vim.keymap.set("n", "<leader>po", ":OmniPreview start<CR>", { silent = true })
+vim.keymap.set("n", "<leader>pc", ":OmniPreview stop<CR>", { silent = true })
 ```
 
 I often just close the preview manually since some of them don't have defined stop behavior, for instance system level preview tools. Maybe there is some way to close these efficiently but I'm not all that aware of it.    
@@ -186,7 +187,7 @@ require("omni-preview").setup({
 #### ROADMAP 🌾
 Lot's of work to do, this is early days. 
 - [ ] Mason like UI and registry
-- [ ] Telescope like picker to support multiple types of previews
+- [x] Telescope like picker to support multiple types of previews
 - [ ] More config options for more plugins
 - [ ] More coverage of LaTeX 
 - [ ] Support for multiple previews on a single filetype
