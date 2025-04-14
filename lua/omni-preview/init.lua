@@ -19,7 +19,7 @@ function M.setup(opts)
         {
             nargs = 1,
             complete = function()
-                return { "start", "stop", "toggle" }
+                return { "start", "stop" }
             end,
             desc = "Control preview for the current filetype: start, stop, or toggle"
         }
