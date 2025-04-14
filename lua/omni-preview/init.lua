@@ -6,7 +6,7 @@ M.command = function(opts)
     if commands[sub] then
         commands[sub](opts)
     else
-        print("Invalid subcommand" .. sub)
+        print("Invalid subcommand " .. sub)
     end
 end
 
