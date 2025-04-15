@@ -1,16 +1,12 @@
-local defaults = require("omni-preview.defaults")
+local defaults = require "omni-preview.defaults"
 
 ---@class CustomModule
 local M = {}
 
 M.close_float = function(buf, win)
-  if buf ~= nil and vim.api.nvim_buf_is_valid(buf) then
-    vim.api.nvim_buf_delete(buf, { force = true })
-  end
+  if buf ~= nil and vim.api.nvim_buf_is_valid(buf) then vim.api.nvim_buf_delete(buf, { force = true }) end
 
-  if win ~= nil and vim.api.nvim_win_is_valid(win) then
-    vim.api.nvim_win_close(win, true)
-  end
+  if win ~= nil and vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
 end
 
 M.create_float_window = function(previews, title, callback)
@@ -18,9 +14,7 @@ M.create_float_window = function(previews, title, callback)
   local buf = vim.api.nvim_create_buf(false, true)
 
   -- create array of just names for the float
-  local names = vim.tbl_map(function(item)
-    return item.name
-  end, previews)
+  local names = vim.tbl_map(function(item) return item.name end, previews)
 
   -- Insert the lines into the buffer
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, names)
@@ -37,20 +31,16 @@ M.create_float_window = function(previews, title, callback)
     style = "minimal",
     border = "rounded",
     title = title,
-    title_pos = 'center'
+    title_pos = "center",
   })
 
   -- line numbers
   vim.api.nvim_set_option_value("number", true, { win = float })
 
   -- Set bindings for menu
-  vim.keymap.set("n", "<ESC>", function()
-    M.close_float(buf, float)
-  end, { buffer = buf, silent = true })
+  vim.keymap.set("n", "<ESC>", function() M.close_float(buf, float) end, { buffer = buf, silent = true })
 
-  vim.keymap.set("n", "q", function()
-    M.close_float(buf, float)
-  end, { buffer = buf, silent = true })
+  vim.keymap.set("n", "q", function() M.close_float(buf, float) end, { buffer = buf, silent = true })
 
   vim.keymap.set("n", "<CR>", function()
     -- Get cursor line number while in the float window
