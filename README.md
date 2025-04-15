@@ -5,15 +5,16 @@ command to tie them together. The goal is to get everything working quickly, whi
 
 https://github.com/user-attachments/assets/e9c0a587-0536-478d-b408-30422ac8e73b
 
-
 > [!IMPORTANT]
 > Still in early stages and lacking support for many plugins, PR's to support your plugin are super welcome! I'll try to add as many as I can.
 
-**Builtin**: 
-- [x] Simple files: `.png`, `.svg`, `.tiff`, `.jpeg`, `.html`, `.pdfs`, etc. 
+**Builtin**:
 
-**Works out of the box with third party** 
-- [x] CSV 
+- [x] Simple files: `.png`, `.svg`, `.tiff`, `.jpeg`, `.html`, `.pdfs`, etc.
+
+**Works out of the box with third party**
+
+- [x] CSV
 - [x] Latex (just by finding a corresponding pdf file, look into vimtex for more)
 - [x] Markdown
 - [x] Typst
@@ -30,7 +31,8 @@ https://github.com/user-attachments/assets/e9c0a587-0536-478d-b408-30422ac8e73b
     opts = {}
 }
 ```
-`Packer.nvim` 
+
+`Packer.nvim`
 
 ```lua
 use {
@@ -42,11 +44,12 @@ use {
 ```
 
 ### Installing Previews
-Simply installing plugins as dependencies calls `.setup` which is usually enough for most of these pugins to work. If for some reason it doesn't you can manually call `.setup()` on each of them. 
+
+Simply installing plugins as dependencies calls `.setup` which is usually enough for most of these pugins to work. If for some reason it doesn't you can manually call `.setup()` on each of them.
 
 **For example with** `Lazy`
 
-```lua 
+```lua
 {
     "sylvanfranklin/omni-preview.nvim",
     dependencies = {
@@ -58,15 +61,16 @@ Simply installing plugins as dependencies calls `.setup` which is usually enough
     opts = {},
 }
 ```
+
 **Override default settings**
-Sometimes these plugins have behavior that you want to change, simply call setup on them yourself.  
+Sometimes these plugins have behavior that you want to change, simply call setup on them yourself.
 
 ```lua
 {
     "sylvanfranklin/omni-preview.nvim",
     dependencies = {
         -- for markdown
-        { "toppair/peek.nvim", lazy = true, build = "deno task --quiet build:fast" } 
+        { "toppair/peek.nvim", lazy = true, build = "deno task --quiet build:fast" }
     },
     config = function()
         require("omni-preview").setup()
@@ -81,36 +85,47 @@ One command to rule them all
 `:OmniPreview {args}`
 
 Two intuitive subcommands
-`:OmniPreview start`, `:OmniPreview stop`. 
+`:OmniPreview start`, `:OmniPreview stop`.
 
-There is no default keymapping, I recommend setting: 
+There is no default keymapping, I recommend setting:
 
 ```lua
 vim.keymap.set("n", "<leader>po", ":OmniPreview start<CR>", { silent = true })
 vim.keymap.set("n", "<leader>pc", ":OmniPreview stop<CR>", { silent = true })
 ```
 
-I often just close the preview manually since some of them don't have defined stop behavior, for instance system level preview tools. Maybe there is some way to close these efficiently but I'm not all that aware of it.    
+or with `Lazy.nvim`
+
+```lua
+{
+  "sylvanfranklin/omni-preview.nvim",
+  opts = {},
+  keys = {
+    { "<leader>po", "<cmd>OmniPreview start<CR>", desc = "OmniPreview Start" },
+    { "<leader>pc", "<cmd>OmniPreview stop<CR>",  desc = "OmniPreview Stop" },
+  }
+}
+```
+
+I often just close the preview manually since some of them don't have defined stop behavior, for instance system level preview tools. Maybe there is some way to close these efficiently but I'm not all that aware of it.
 
 ## Filetypes
 
-Remember to add these as dependencies or set them up manually with `.setup` if you want your own preferences. The Lazy package manager will call default setup functions on everything defined as a depencency. While this does save some complexity, it also often means less than desirable default behavior. Because of this I like to set things up individually. 
+Remember to add these as dependencies or set them up manually with `.setup` if you want your own preferences. The Lazy package manager will call default setup functions on everything defined as a depencency. While this does save some complexity, it also often means less than desirable default behavior. Because of this I like to set things up individually.
 
 #### Typst
 
-
-- [typst-preview.nvim](https://github.com/chomosuke/typst-preview.nvim) Instant onpyte updating preview  
+- [typst-preview.nvim](https://github.com/chomosuke/typst-preview.nvim) Instant onpyte updating preview
 
 ```lua
-{ 'chomosuke/typst-preview.nvim', lazy = true }, 
+{ 'chomosuke/typst-preview.nvim', lazy = true },
 ```
-
 
 #### Markdown
 
 - [peek.nvim](https://github.com/toppair/peek.nvim) Best all around in my experience.
 
-```lua 
+```lua
 { "toppair/peek.nvim", lazy = true, build = "deno task --quiet build:fast" },
 ```
 
@@ -156,7 +171,7 @@ Remember to add these as dependencies or set them up manually with `.setup` if y
 - [csvview.nvim](https://github.com/hat0uma/csvview.nvim) Conceal in editor
 
 ```lua
-{ 'hat0uma/csvview.nvim', lazy = true } 
+{ 'hat0uma/csvview.nvim', lazy = true }
 ```
 
 #### Other
@@ -183,19 +198,19 @@ require("omni-preview").setup({
     {'laytan/cloak.nvim', lazy = true}
 ```
 
-
 #### ROADMAP 🌾
-Lot's of work to do, this is early days. 
+
+Lot's of work to do, this is early days.
+
 - [ ] Mason like UI and registry
 - [x] Telescope like picker to support multiple types of previews
 - [ ] More config options for more plugins
-- [ ] More coverage of LaTeX 
-- [ ] Support for multiple previews on a single filetype
-
+- [ ] More coverage of LaTeX
+- [x] Support for multiple previews on a single filetype
 
 #### Alternatives
 
-- The OG [knap](https://github.com/frabjous/knap), requires a bit more tinkering to get certain previews working.    
+- The OG [knap](https://github.com/frabjous/knap), requires a bit more tinkering to get certain previews working.
 - Live support for many types [live-preview.nvim](https://github.com/brianhuster/live-preview.nvim). I might try to intergrate this in omni soon.
 
 go give stars to the authors of these and the preview plugins, they are the real heros.
