@@ -169,6 +169,18 @@ M.previews = {
   { trig = "gif", start = M.system_open, name = "builtin" },
   { trig = "jpg", start = M.system_open, name = "builtin" },
   { trig = "webp", start = M.system_open, name = "builtin" },
+  { trig = "mp4", start = M.system_open, name = "builtin" },
+  { trig = "mov", start = M.system_open, name = "builtin" },
+  { trig = "avi", start = M.system_open, name = "builtin" },
+  { trig = "mkv", start = M.system_open, name = "builtin" },
+  { trig = "flv", start = M.system_open, name = "builtin" },
+  { trig = "wmv", start = M.system_open, name = "builtin" },
+  { trig = "webm", start = M.system_open, name = "builtin" },
+  { trig = "3gp", start = M.system_open, name = "builtin" },
+  { trig = "mpeg", start = M.system_open, name = "builtin" },
+  { trig = "mpg", start = M.system_open, name = "builtin" },
+  { trig = "m4v", start = M.system_open, name = "builtin" },
+  { trig = "ogv", start = M.system_open, name = "builtin" },
 }
 
 return M
